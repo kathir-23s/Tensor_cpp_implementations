@@ -1,5 +1,6 @@
 #include "Tensor.h"
 #include "UnaryOps.h"
+
 #include <iostream>
 #include <cassert>
 
@@ -50,7 +51,7 @@ void test_neg_operation() {
     int_data[0] = 5; int_data[1] = -3;
     int_data[2] = 0; int_data[3] = 10;
     
-    Tensor int_neg = -int_tensor;
+    Tensor int_neg = -(int_tensor);
     const int32_t* int_neg_data = static_cast<const int32_t*>(int_neg.data());
     
     assert(int_neg_data[0] == -5);   // -5
@@ -65,7 +66,7 @@ void test_neg_operation() {
     float* float_data = static_cast<float*>(float_tensor.data());
     float_data[0] = 2.5f; float_data[1] = -1.5f; float_data[2] = 0.0f;
     
-    Tensor float_neg = -float_tensor;
+    Tensor float_neg = -(float_tensor);
     const float* float_neg_data = static_cast<const float*>(float_neg.data());
     
     assert(float_neg_data[0] == -2.5f);  // -2.5
@@ -110,11 +111,11 @@ int main() {
         test_tensor_metadata();
         std::cout << "\n";
         
-        std::cout << "🎉 All tests passed! Tensor operations are working correctly.\n";
+        std::cout << "All tests passed! Tensor operations are working correctly.\n";
         return 0;
         
     } catch (const std::exception& e) {
-        std::cerr << "❌ Test failed with error: " << e.what() << "\n";
+        std::cerr << " Test failed with error: " << e.what() << "\n";
         return 1;
     }
 }

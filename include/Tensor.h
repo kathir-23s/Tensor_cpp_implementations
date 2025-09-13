@@ -60,7 +60,7 @@ class Tensor {
         return total;
         }
 
-        Tensor operator-() const;
+        Tensor power(int exp);
 
     private:
         Shape shape_;

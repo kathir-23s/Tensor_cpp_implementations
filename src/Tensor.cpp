@@ -42,3 +42,19 @@ Tensor::Tensor(Shape shape, Dtype dtype, Device device, bool requires_grad)
     } 
 }
 
+Tensor Tensor::power(int exp){
+    Tensor output(Shape{shape()}, dtype(), device(), requires_grad());
+    apply_type_specific_operation(*this, output, [exp](auto x) -> auto{
+        using T = decltype(x);
+
+        if (exp == 0) return T(1);
+        T result = 1, base = x;
+        for (int i=0; i<exp; i++){
+            result *= base;
+        }
+        return result;
+
+    });
+    return output;
+}
+

@@ -18,20 +18,26 @@ Tensor abs(const Tensor &input){
     return output;
 }
 
-Tensor Tensor::operator-() const {  // NO parameters!
-    Tensor result(Shape{shape()}, dtype(), device(), requires_grad());
-    apply_type_specific_operation(*this, result, [](auto x){ return -x; });
+Tensor operator-(const Tensor& input)  {  // NO parameters!
+    Tensor result(Shape{input.shape()}, input.dtype(), input.device(), input.requires_grad());
+    apply_type_specific_operation(input, result, [](auto x){ return -x; });
     return result;
 }
 
 Tensor pow(const Tensor& input, int exponent){
     Tensor output(Shape{input.shape()}, input.dtype(), input.device(), input.requires_grad());
     apply_type_specific_operation(input, output, [exponent](auto x) -> auto {
-        for (int i=0; i<exponent; i++){
-            x *= x;
+        using T = decltype(x); // Telling to make T as same type as x
+
+        if (exponent == 0) return T(1);   // any number^0 = 1
+        T result = 1;
+        T base = x;
+        for (int i = 0; i < exponent; i++) {
+            result *= base;
         }
-        return x;
+        return result;
     });
     return output;
+
 }
 
