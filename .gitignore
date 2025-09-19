@@ -43,3 +43,7 @@
 # Assembly Files
 *.s
 *.asm 
+
+.vscode
+objects/
+lib_compiles/
